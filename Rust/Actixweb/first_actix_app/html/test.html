@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+    <body>
+        <input type="file" id="fileUpload" />
+        <input type="submit" id="SubmitButton"/>
+        <script>
+            const handleImageUpload = event => {
+                const file = document.querySelector('#fileUpload').files[0];
+                const formData = new FormData();
+                formData.append('myFile', file);
+
+                fetch('localhost:8080/sendimage', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data.path)
+                })
+                .catch(error => {
+                    console.error(error)
+                });
+            }
+
+            document.querySelector('#SubmitButton').addEventListener('click', event => {
+                handleImageUpload(event)
+            })
+        </script>
+    </body>
+</html>
